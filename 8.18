@@ -5,6 +5,11 @@
   python3中的urlencode函数是 urllib.parse.urlencode(dictA)，效果是把字典A里的内容做urlencode并转化为key1=value1&key2=value2...的形式
   如果要对单个字符串做urlencode，则使用urllib.parse.quote(strA)。但这里就出现了一个问题：用quote没能将“/”成功转化。目前鉴权字符串的生成就只剩这
   一个问题了。
+  解决了!查看parse模块的代码可以看到quote函数的默认参数safe="/"，斜杠不做处理。所以需要多加个入参：quote（strA,safe=""），就可以让/正常的被转码。参考https://blog.csdn.net/hareshaw/article/details/84335738
+  也可以让safe=其他值，可以让这些值也不被转码
+  
+  
+  
   
  
 2.关于字典：
