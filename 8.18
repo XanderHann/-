@@ -1,0 +1,29 @@
+今天完成了最终鉴权字符串的生成，但仍存在一个小问题：在urlencode过程中，"/"没有被转码成功，导致最终生成的鉴权字符串是错误的。
+
+先记录下到这一步用到的各种函数/功能：
+1.关于urlencode：
+  python3中的urlencode函数是 urllib.parse.urlencode(dictA)，效果是把字典A里的内容做urlencode并转化为key1=value1&key2=value2...的形式
+  如果要对单个字符串做urlencode，则使用urllib.parse.quote(strA)。但这里就出现了一个问题：用quote没能将“/”成功转化。目前鉴权字符串的生成就只剩这
+  一个问题了。
+  
+ 
+2.关于字典：
+  字典是key-value的集合，一个字典中key不能重复。字典变量通常用dict来表示。
+  dict.items()可以列表返回可遍历的(键, 值) 元组数组，可以用在for循环里：python的for循环非常的灵活，for key,value in header.items():就可以当作
+  遍历字典，并分别赋值给key和value两个变量。
+  
+3.用到的常用函数
+  str()：把括号内的东西变为字符串
+  A.lower()：把A变为小写
+  result.append(A)：把A加到数组result的最后面
+  result.sort()：将result排序
+  "\n".join(result)把数组result里的每个内容用\n连接起来
+  
+4.关于加密：
+  sha256加密需要import hmac，写法如signingKey = hmac.new(SK.encode('utf-8'),authStringPrefix.encode('utf-8'),hashlib.sha256)
+  上面一行命令里，SK和authStringPrefix本来都是字符串，但hmac.new要求这两个位置上的内容需要是byte格式的，所以需要进行转码；最后的hashlib.sha256，
+  256其实可以换成别的值（就成了其他的加密方式了）。
+  最终得到的signingKey是没法直接打印出结果的，需要signingKey.hexdigest()才能得到生成的字符串。
+  加密这一部分涉及的概念较多，目前只是凑出了正确的结果，但过程中的概念还不是很清晰。等以后遇到相应的场景再仔细研究吧。
+  
+  
