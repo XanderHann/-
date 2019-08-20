@@ -1,0 +1,9 @@
+昨天完成了API的实际调通，good job！记录一下用到的知识：
+
+1.UTC时间：
+  UTC时间不仅仅是本地时间加个字母，而是指格林威治天文时间。需要先import time，再用time.gmtime()获取当前UTC时间，再用time.strftime('%Y-%m-%dT%H:%M:%SZ',x_bce_date)
+  将其转化为要求的格式
+  
+2.发送HTTP请求：
+  发送HTTP请求需要import requests，然后r = requests.put(url,headers = header,json = body)即可发送一个put请求。
+  r里存放着接收到的返回信息，包括r.url、r.headers和r.text
